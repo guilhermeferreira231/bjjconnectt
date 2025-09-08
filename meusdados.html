@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Dados - Colaborador</title>
+    <link rel="stylesheet" href="dadoscolaborador.css">
+</head>
+<body>
+    <div class="side-menu" id="sideMenu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="colaborador.html">Área do Colaborador</a>
+        <a href="divulgarcampeonato.html">Divulgar Campeonato</a>
+        <a href="divulgararena.html">Divulgar Arena</a>
+        <a href="meusdados.html" class="active">Meus Dados</a>
+        <a href="painelcolaborador.html">Painel do Colaborador</a>
+    </div>
+    <span class="menu-icon" onclick="openMenu()">&#9776;</span>
+    <div class="dados-container">
+        <button onclick="window.history.back()" class="voltar-btn">← Voltar</button>
+        <h1 class="dados-titulo">Meus Dados</h1>
+        <div class="dados-info" id="dadosInfo">
+            <!-- Dados do colaborador preenchidos via JS -->
+        </div>
+        <h2 class="mensagens-titulo">Mensagens dos Inscritos</h2>
+        <div class="mensagens-lista" id="mensagensLista">
+            <!-- Mensagens dos inscritos preenchidas via JS -->
+        </div>
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+
+        // PUXA OS DADOS DO COLABORADOR LOGADO
+        const usuario_id = localStorage.getItem('usuario_id');
+        if (usuario_id) {
+          fetch('php/api/dados-colaborador.php', {
+            method: 'POST',
+            body: new URLSearchParams({ usuario_id }),
+            credentials: 'include'
+          })
+          .then(res => res.json())
+          .then(colaborador => {
+  document.getElementById('dadosInfo').innerHTML = `
+    <p><b>ID:</b> ${colaborador.id || ''}</p>
+    <p><b>Nome:</b> ${colaborador.nome || ''}</p>
+    <p><b>Email:</b> ${colaborador.email || ''}</p>
+    <p><b>Telefone:</b> ${colaborador.telefone || ''}</p>
+    <p><b>Tipo:</b> ${colaborador.tipo === 'colaborador' ? 'Colaborador' : ''}</p>
+  `;
+          });
+        } else {
+          document.getElementById('dadosInfo').innerHTML = "<p style='color:#C2131E;'>Usuário não logado.</p>";
+        }
+
+        // Função para renderizar mensagens
+        function renderMensagens(mensagens) {
+            let html = "";
+            if (mensagens.length === 0) {
+                html = "<p style='color:#FFD700;'>Nenhuma mensagem recebida ainda.</p>";
+            } else {
+                mensagens.forEach(msg => {
+                    html += `
+                        <div class="mensagem-card">
+                            <p><b>${msg.nome}</b> <span style="color:#FFD700;">(${msg.email})</span></p>
+                            <p class="mensagem-texto">"${msg.mensagem}"</p>
+                            <div class="mensagem-resposta">
+                                ${msg.resposta ? `<b>Resposta:</b> ${msg.resposta}` : `
+                                    <textarea placeholder="Digite sua resposta..." id="resp${msg.id}"></textarea>
+                                    <button onclick="responderMensagem(${msg.id})" class="responder-btn">Responder</button>
+                                `}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('mensagensLista').innerHTML = html;
+        }
+
+        // Busca mensagens do servidor
+        fetch('php/api/mensagens.php', {
+          method: 'GET',
+          credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(mensagens => {
+          renderMensagens(mensagens);
+        });
+
+        // Função para responder mensagem
+        window.responderMensagem = function(id) {
+            const textarea = document.getElementById('resp' + id);
+            const resposta = textarea.value.trim();
+            if (resposta.length === 0) {
+                textarea.style.border = "2px solid #C2131E";
+                return;
+            }
+            mensagens = mensagens.map(msg => msg.id === id ? { ...msg, resposta } : msg);
+            renderMensagens(mensagens);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Divulgar Campeonato</title>
+    <link rel="stylesheet" href="divulgarcampeonato.css">
+</head>
+<body>
+    <!-- Menu lateral colaborador -->
+    <div class="side-menu" id="sideMenu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="colaborador.html">Área do Colaborador</a>
+        <a href="divulgarcampeonato.html" class="active">Divulgar Campeonato</a>
+        <a href="divulgararena.html">Divulgar Arena</a>
+        <a href="meusdados.html">Meus Dados</a>
+        <a href="painelcolaborador.html">Painel do Colaborador</a>
+    </div>
+    <span class="menu-icon" onclick="openMenu()">&#9776;</span>
+
+    <div class="divulgar-container">
+        <button onclick="window.history.back()" class="voltar-btn">← Voltar</button>
+        <h1 class="divulgar-titulo">Divulgue seu Campeonato</h1>
+        <p class="divulgar-info">
+            Quer atrair mais atletas e público para seu evento? Siga os passos abaixo para divulgar seu campeonato no portal!
+        </p>
+        <div class="divulgar-passoapasso">
+            <h2>Passo a passo:</h2>
+            <ol>
+                <li>Preencha todos os campos do formulário com informações claras e completas.</li>
+                <li>Adicione uma imagem atrativa do campeonato.</li>
+                <li>Descreva as regras, datas, local e premiações.</li>
+                <li>Revise os dados antes de enviar.</li>
+                <li>Clique em <b>Divulgar</b> e aguarde a aprovação da equipe!</li>
+            </ol>
+        </div>
+        <div class="divulgar-frases">
+            <blockquote>"Seu evento pode ser o próximo grande sucesso!"</blockquote>
+            <blockquote>"Divulgue, inspire e movimente o esporte!"</blockquote>
+        </div>
+        <form class="divulgar-form" id="formDivulgarCampeonato">
+            <input type="text" placeholder="Nome do Campeonato" required>
+            <input type="text" placeholder="Local" required>
+            <input type="date" required>
+            <input type="text" placeholder="Premiação" required>
+            <textarea placeholder="Descrição e regras" required></textarea>
+            <input type="file" accept="image/*" required>
+            <button type="submit">Divulgar</button>
+        </form>
+        <div class="divulgar-sucesso" id="divulgarCampeonatoSucesso">Campeonato enviado para análise!</div>
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        document.getElementById('formDivulgarCampeonato').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nome = e.target[0].value;
+  const local = e.target[1].value;
+  const data = e.target[2].value;
+  const premiacao = e.target[3].value;
+  const descricao = e.target[4].value;
+  // Para imagem, use FormData se quiser enviar arquivo
+  fetch('php/api/campeonatos.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      nome,
+      local,
+      data,
+      premiacao,
+      descricao,
+      imagem: '' // implementar upload depois
+    }),
+    credentials: 'include'
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === 'success') {
+      document.getElementById('divulgarCampeonatoSucesso').style.display = 'block';
+      setTimeout(function(){
+        document.getElementById('divulgarCampeonatoSucesso').style.display = 'none';
+        e.target.reset();
+      }, 2000);
+    } else {
+      alert('Erro ao divulgar campeonato');
+    }
+  });
+});
+    </script>
+</body>
+</html>

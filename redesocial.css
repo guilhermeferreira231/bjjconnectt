@@ -1,0 +1,399 @@
+body {
+    background: linear-gradient(120deg,#000 60%,#2d0a0a 100%);
+    color: #C2131E;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.menu-icon {
+    font-size: 36px;
+    color: #C2131E;
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    cursor: pointer;
+    z-index: 1001;
+}
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+.side-menu a {
+    padding: 12px 32px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #C2131E;
+    display: block;
+    transition: 0.2s;
+}
+.side-menu a:hover, .side-menu a.active {
+    background: #C2131E;
+    color: #fff;
+}
+.closebtn {
+    position: absolute;
+    top: 12px;
+    right: 24px;
+    font-size: 36px;
+    color: #C2131E;
+    cursor: pointer;
+}
+.social-header {
+    text-align: center;
+    padding: 56px 0 32px 0;
+    background: linear-gradient(90deg,#d32f2f 60%,#b71c1c 100%);
+    color: #fff;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    letter-spacing: 2px;
+}
+.social-header h1 {
+    font-size: 60px;
+    margin-bottom: 8px;
+    letter-spacing: 3px;
+    font-weight: 900;
+    text-shadow: 0 2px 8px #222;
+}
+.social-header p {
+    font-size: 26px;
+    font-weight: 400;
+    margin-top: 0;
+}
+.social-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px 0 0 0;
+}
+.banner-img {
+    width: 90vw;
+    max-width: 900px;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(210,19,30,0.18);
+    border: 3px solid #C2131E;
+    transition: transform 0.5s;
+}
+.banner-frases {
+    margin-top: 18px;
+    text-align: center;
+}
+.banner-frases blockquote {
+    color: #C2131E;
+    font-size: 24px;
+    font-style: italic;
+    margin: 10px 0;
+    font-weight: 600;
+    opacity: 0.85;
+}
+.social-about {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 56px 0 0 0;
+    gap: 48px;
+}
+.about-imgs {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.about-imgs img {
+    width: 200px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    background: #222;
+    border: 2px solid #C2131E;
+    transition: transform 0.5s;
+}
+.about-imgs img:hover {
+    transform: scale(1.07) rotate(-2deg);
+}
+.about-text {
+    max-width: 480px;
+    color: #fff;
+    font-size: 22px;
+    line-height: 1.5;
+    background: rgba(44,0,0,0.18);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+}
+.about-text h2 {
+    color: #C2131E;
+    font-size: 34px;
+    margin-bottom: 12px;
+    font-weight: 900;
+}
+.social-links {
+    text-align: center;
+    margin: 56px 0 0 0;
+}
+.social-links h2 {
+    color: #C2131E;
+    font-size: 30px;
+    margin-bottom: 18px;
+    font-weight: 900;
+}
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 32px;
+}
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #C2131E;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 14px 38px;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    transition: background 0.2s, transform 0.2s;
+    border: none;
+}
+.social-btn img {
+    width: 36px;
+    height: 36px;
+}
+.social-btn.whatsapp:hover {
+    background: #25D366;
+    color: #fff;
+    transform: scale(1.08);
+}
+.social-btn.instagram:hover {
+    background: #E1306C;
+    color: #fff;
+    transform: scale(1.08);
+}
+.mensagem-org {
+    background: #1a1a1a;
+    border-radius: 18px;
+    padding: 40px 32px;
+    margin: 56px auto 0 auto;
+    max-width: 600px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    position: relative;
+}
+.mensagem-org h2 {
+    color: #C2131E;
+    margin-bottom: 18px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 900;
+}
+.mensagem-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.mensagem-form input,
+.mensagem-form textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    background: #333;
+    color: #fff;
+    resize: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: box-shadow 0.2s;
+}
+.mensagem-form input:focus,
+.mensagem-form textarea:focus {
+    box-shadow: 0 2px 16px #C2131E55;
+    outline: none;
+}
+.mensagem-form button {
+    background: #C2131E;
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.mensagem-form button:hover {
+    background: #fff;
+    color: #C2131E;
+    transform: scale(1.07);
+}
+.mensagem-sucesso {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    transform: translateX(-50%);
+    background: #25D366;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.mensagem-sucesso.show {
+    display: block;
+    opacity: 1;
+}
+.social-footer {
+    text-align: center;
+    color: #fff;
+    background: #222;
+    padding: 32px 0 16px 0;
+    margin-top: 56px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    box-shadow: 0 -2px 12px #C2131E22;
+}
+
+/* Adicionei o estilo para o modal de avaliação */
+.avaliacao-modal-bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+}
+.avaliacao-modal {
+    background: #333;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    position: relative;
+}
+.close-avaliacao {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 28px;
+    color: #C2131E;
+    cursor: pointer;
+}
+.estrelas {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+}
+.estrela {
+    font-size: 36px;
+    cursor: pointer;
+}
+textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    background: #444;
+    color: #fff;
+    resize: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: box-shadow 0.2s;
+}
+textarea:focus {
+    box-shadow: 0 2px 16px #C2131E55;
+    outline: none;
+}
+.enviar-avaliacao-btn {
+    background: #C2131E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.enviar-avaliacao-btn:hover {
+    background: #fff;
+    color: #C2131E;
+    transform: scale(1.07);
+}
+.avaliacao-sucesso {
+    display: none;
+    margin-top: 16px;
+    padding: 12px;
+    background: #25D366;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    text-align: center;
+}
+
+/* animações do modal */
+@keyframes modalShow {
+    from { opacity: 0; transform: scale(0.7) translateY(40px);}
+    to { opacity: 1; transform: scale(1) translateY(0);}
+}
+@keyframes modalHide {
+    from { opacity: 1; transform: scale(1);}
+    to { opacity: 0; transform: scale(0.7) translateY(40px);}
+}
+.anim-modal-show {
+    animation: modalShow 0.35s forwards;
+}
+.anim-modal-hide {
+    animation: modalHide 0.35s forwards;
+}
+
+/* Adicionei o estilo do botão de avaliar */
+.avaliar-btn {
+    background: linear-gradient(90deg,#d32f2f 60%,#b71c1c 100%);
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 38px;
+    margin-top: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    transition: background 0.2s, transform 0.2s;
+}
+.avaliar-btn:hover {
+    background: #fff;
+    color: #C2131E;
+    transform: scale(1.07);
+}
+
+@media (max-width: 900px) {
+    .banner-img { max-width: 98vw; }
+    .about-imgs img { width: 120px; height: 80px; }
+    .about-text { max-width: 98vw; }
+    .mensagem-org { max-width: 98vw; }
+    .social-header h1 { font-size: 36px; }
+    .social-header p { font-size: 18px; }
+    .social-footer { font-size: 16px; }
+}

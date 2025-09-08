@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas incrições Participante</title>
+    <link rel="stylesheet" href="meusdadosparticipante.css">
+</head>
+<body>
+    <!-- Substitua o menu atual por este -->
+    <div id="sideMenu" class="side-menu">
+      <button class="close-btn" onclick="closeMenu()">&times;</button>
+      <a href="paginainicial.html" style="margin-top:32px; display:block;">Página Inicial</a>
+      <a href="meusdadosparticipante.html" class="active">Meus Dados</a>
+      <a href="arenas.html">Academias</a>
+      <a href="campeonatos.html">Campeonatos</a>
+      <a href="redesociais.html">Redes Sociais</a>
+      <a href="login.html">Sair</a>
+    </div>
+    <button class="open-btn" onclick="openMenu()">&#9776;</button>
+    <div class="dados-container">
+        <button onclick="window.history.back()" class="voltar-btn">← Voltar</button>
+        <h1 class="dados-titulo">Meus Dados</h1>
+        <div class="dados-info" id="dadosInfo"></div>
+        <h2 class="mensagens-titulo">Meus Campeonatos Inscritos</h2>
+        <div class="mensagens-lista" id="inscricoesLista"></div>
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+
+        // Busca dados do participante logado
+        document.addEventListener('DOMContentLoaded', function() {
+            const usuarioId = localStorage.getItem('usuario_id');
+
+            // Busca dados do atleta logado
+            fetch('php/api/participante.php', {
+                method: 'POST',
+                body: new URLSearchParams({ usuario_id: usuarioId }),
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(participante => {
+                document.getElementById('dadosInfo').innerHTML = `
+                    <p><b>Nome:</b> ${participante.nome}</p>
+                    <p><b>Email:</b> ${participante.email}</p>
+                    <p><b>CPF:</b> ${participante.cpf}</p>
+                `;
+            });
+
+            // Busca e exibe campeonatos inscritos
+            fetch('php/api/inscricoes.php', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(inscricoes => {
+                let html = "";
+                if (inscricoes.length === 0) {
+                    html = "<p style='color:#FFD700;'>Você ainda não está inscrito em nenhum campeonato.</p>";
+                } else {
+                    inscricoes.forEach((insc, idx) => {
+                        html += `
+                            <div class="mensagem-card">
+                                <h3 style="color:#FFD700;">${insc.campeonato}</h3>
+                                <p><b>Data:</b> ${new Date(insc.data).toLocaleDateString()}</p>
+                                <p><b>Local:</b> ${insc.local}</p>
+                                <p><b>Organizador:</b> ${insc.colaborador.nome} <span style="color:#FFD700;">(${insc.colaborador.email})</span></p>
+                                <button onclick="abrirMensagem(${idx})" class="responder-btn" style="margin-top:8px;">Enviar mensagem ao colaborador</button>
+                            </div>
+                        `;
+                    });
+                }
+                document.getElementById('inscricoesLista').innerHTML = html;
+            });
+        });
+
+        // Modal de mensagem (simples, não funcional)
+        window.abrirMensagem = function(idx) {
+            // Você pode adaptar para buscar os dados do inscricoes se necessário
+            alert('Em breve você poderá enviar mensagens diretamente pelo sistema!');
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Campeonatos</title>
+    <link rel="stylesheet" href="campeonato.css">
+</head>
+<body>
+    <!-- Carrossel de imagens ocupando toda a tela -->
+    <div class="carousel" id="carousel">
+        <div class="carousel-overlay">
+            <h1 class="carousel-title">
+                <span class="titulo-topo">Área de Campeonatos</span>
+                <span class="subtexto">Bem vindo a área de campeonatos, procure oq se encaixa melhor e vai em busca da luta</span>
+            </h1>
+        </div>
+        <img src="men-8151665_1280.jpg" class="carousel-img active">
+        <img src="maxresdefault.jpg" class="carousel-img">
+        <img src="Muay_Thai_Fight_Us_Vs_Burma_(80668065).jpeg" class="carousel-img">
+    </div>
+
+    <!-- Campeonatos -->
+    <div class="campeonatos-retangulares">
+        <div class="retangulo-campeonato anim-campeonato">
+            <div class="retangulo-img">
+                <img src="men-8151665_1280.jpg" alt="Campeonato 1">
+            </div>
+            <div class="retangulo-info">
+                <h2>Campeonato Estadual de Muay Thai</h2>
+                <p>Participe do maior evento de Muay Thai da região! Venha mostrar sua força e garra.</p>
+                <span class="retangulo-frase">"A vitória é construída nos treinos!"</span>
+                <button class="retangulo-btn" onclick="abrirInscricao()">Fazer inscrição</button>
+            </div>
+        </div>
+        <div class="retangulo-campeonato anim-campeonato">
+            <div class="retangulo-img">
+                <img src="Muay_Thai_Fight_Us_Vs_Burma_(80668065).jpeg" alt="Campeonato 2">
+            </div>
+            <div class="retangulo-info">
+                <h2>Open Jiu-Jitsu</h2>
+                <p>Desafie seus limites no Open Jiu-Jitsu! Inscreva-se e faça parte dessa experiência.</p>
+                <span class="retangulo-frase">"Quem luta nunca perde, aprende!"</span>
+                <button class="retangulo-btn" onclick="abrirInscricao()">Fazer inscrição</button>
+            </div>
+        </div>
+        <div class="retangulo-campeonato anim-campeonato">
+            <div class="retangulo-img">
+                <img src="maxresdefault.jpg" alt="Campeonato 3">
+            </div>
+            <div class="retangulo-info">
+                <h2>Desafio MMA</h2>
+                <p>Venha para o Desafio MMA e mostre seu talento no octógono. Inscreva-se já!</p>
+                <span class="retangulo-frase">"Coragem é o que nos move!"</span>
+                <button class="retangulo-btn" onclick="abrirInscricao()">Fazer inscrição</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Inscrição -->
+    <div id="inscricaoModal" class="inscricao-modal-bg">
+        <div class="inscricao-modal anim-modal">
+            <button class="close-inscricao" onclick="fecharInscricao()">&times;</button>
+            <h2>Inscreva-se no Campeonato</h2>
+            <form class="inscricao-form" id="inscricaoForm">
+                <input type="text" placeholder="Nome completo" required>
+                <input type="email" placeholder="E-mail" required>
+                <input type="text" placeholder="Telefone" required>
+                <button type="submit">Enviar inscrição</button>
+            </form>
+            <div id="inscricaoSucesso" class="inscricao-sucesso">Inscrição enviada com sucesso!</div>
+        </div>
+    </div>
+
+    <script>
+    // Carrossel de imagens
+    let current = 0;
+    const imgs = document.querySelectorAll('.carousel-img');
+    setInterval(() => {
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
+    }, 4000); // 4 segundos
+
+    // Animação dos campeonatos ao aparecer
+    function animateOnScroll() {
+        const cards = document.querySelectorAll('.anim-campeonato');
+        const trigger = window.innerHeight * 0.85;
+        cards.forEach(card => {
+            const top = card.getBoundingClientRect().top;
+            if (top < trigger) {
+                card.classList.add('show');
+            }
+        });
+    }
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+
+    // Função para abrir o modal de inscrição
+    function abrirInscricao() {
+        document.getElementById('inscricaoModal').style.display = 'flex';
+        document.getElementById('inscricaoSucesso').style.display = 'none';
+        document.getElementById('inscricaoForm').reset();
+        document.querySelector('.inscricao-modal').classList.remove('anim-modal-hide');
+        document.querySelector('.inscricao-modal').classList.add('anim-modal-show');
+    }
+
+    // Função para fechar o modal de inscrição
+    function fecharInscricao() {
+        document.querySelector('.inscricao-modal').classList.remove('anim-modal-show');
+        document.querySelector('.inscricao-modal').classList.add('anim-modal-hide');
+        setTimeout(()=>{ document.getElementById('inscricaoModal').style.display = 'none'; }, 350);
+    }
+
+    document.querySelectorAll('.retangulo-btn').forEach(btn => {
+        btn.onclick = function() {
+            document.getElementById('inscricaoModal').style.display = 'flex';
+            document.getElementById('inscricaoSucesso').style.display = 'none';
+            document.getElementById('inscricaoForm').reset();
+            document.querySelector('.inscricao-modal').classList.remove('anim-modal-hide');
+            document.querySelector('.inscricao-modal').classList.add('anim-modal-show');
+        };
+    });
+
+    // Envio do formulário de inscrição
+    document.getElementById('inscricaoForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        // Aqui você precisa do id do campeonato (ajuste conforme necessário)
+        const campeonato_id = 1; // Exemplo, ajuste para o id real do campeonato
+
+        fetch('php/api/inscricoes.php', {
+            method: 'POST',
+            body: new URLSearchParams({
+                campeonato_id
+            }),
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('inscricaoSucesso').style.display = 'block';
+                setTimeout(fecharInscricao, 1800);
+            } else {
+                alert('Erro ao inscrever: ' + (data.message || 'Tente novamente'));
+            }
+        });
+    });
+
+    document.getElementById('inscricaoModal').onclick = function(e){
+        if(e.target === this) fecharInscricao();
+    };
+    </script>
+</body>
+</html>

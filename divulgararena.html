@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Divulgar Arena</title>
+    <link rel="stylesheet" href="divulgararena.css">
+</head>
+<body>
+    <!-- Menu lateral colaborador -->
+    <div class="side-menu" id="sideMenu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="colaborador.html">Área do Colaborador</a>
+        <a href="divulgarcampeonato.html">Divulgar Campeonato</a>
+        <a href="divulgararena.html" class="active">Divulgar Arena</a>
+        <a href="meusdados.html">Meus Dados</a>
+        <a href="painelcolaborador.html">Painel do Colaborador</a>
+    </div>
+    <span class="menu-icon" onclick="openMenu()">&#9776;</span>
+
+    <div class="divulgar-container">
+        <button onclick="window.history.back()" class="voltar-btn">← Voltar</button>
+        <h1 class="divulgar-titulo">Divulgue sua Arena</h1>
+        <p class="divulgar-info">
+            Quer que sua arena seja conhecida por mais atletas e eventos? Siga os passos abaixo para divulgar sua arena no portal!
+        </p>
+        <div class="divulgar-passoapasso">
+            <h2>Passo a passo:</h2>
+            <ol>
+                <li>Preencha todos os campos do formulário com informações detalhadas.</li>
+                <li>Adicione uma imagem de destaque da arena.</li>
+                <li>Descreva a infraestrutura, localização e diferenciais.</li>
+                <li>Revise os dados antes de enviar.</li>
+                <li>Clique em <b>Divulgar</b> e aguarde a aprovação da equipe!</li>
+            </ol>
+        </div>
+        <div class="divulgar-frases">
+            <blockquote>"Sua arena pode ser o próximo palco de grandes conquistas!"</blockquote>
+            <blockquote>"Divulgue, conecte e faça parte do crescimento do esporte!"</blockquote>
+        </div>
+        <form class="divulgar-form">
+            <input type="text" placeholder="Nome da Arena" required>
+            <input type="text" placeholder="Endereço" required>
+            <input type="text" placeholder="Cidade/Estado" required>
+            <textarea placeholder="Descrição completa" required></textarea>
+            <input type="file" accept="image/*" required>
+            <select id="modalidadeArena" name="modalidadeArena" required>
+              <option value="">Selecione a modalidade</option>
+              <option value="futvolei">Futvôlei</option>
+              <option value="jiujitsu">Jiu-Jitsu</option>
+              <option value="volei">Vôlei</option>
+              <option value="fut7">Fut7</option>
+              <option value="muaythay">Muay Thai</option>
+              <option value="tenis">Tênis</option>
+            </select>
+            <button type="submit">Divulgar</button>
+        </form>
+        <div class="divulgar-sucesso" id="divulgarArenaSucesso">Arena enviada para análise!</div>
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        document.querySelector('.divulgar-form').addEventListener('submit', function(e){
+          e.preventDefault();
+          const nome = e.target[0].value;
+          const endereco = e.target[1].value;
+          const cidade_estado = e.target[2].value;
+          const descricao = e.target[3].value;
+          const modalidadeArena = e.target[4].value;
+          const colaborador_id = localStorage.getItem('usuario_id'); // pega o id do colaborador logado
+
+          fetch('php/api/arenas.php', {
+            method: 'POST',
+            body: new URLSearchParams({
+              nome,
+              endereco,
+              cidade_estado,
+              descricao,
+              modalidadeArena,
+              colaborador_id // envia o id junto!
+            }),
+            credentials: 'include'
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'success') {
+              document.getElementById('divulgarArenaSucesso').style.display = 'block';
+              setTimeout(function(){
+                document.getElementById('divulgarArenaSucesso').style.display = 'none';
+                e.target.reset();
+              }, 2000);
+            } else {
+              alert('Erro ao divulgar arena');
+            }
+          });
+        });
+    </script>
+</body>
+</html>

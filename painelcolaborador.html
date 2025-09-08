@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Colaborador</title>
+    <link rel="stylesheet" href="divulgarcampeonato.css">
+</head>
+<body>
+    <div class="side-menu" id="sideMenu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="colaborador.html">Área do Colaborador</a>
+        <a href="divulgarcampeonato.html">Divulgar Campeonato</a>
+        <a href="divulgararena.html">Divulgar Arena</a>
+        <a href="meusdados.html">Meus Dados</a>
+        <a href="painelcolaborador.html" class="active">Painel do Colaborador</a>
+    </div>
+    <span class="menu-icon" onclick="openMenu()">&#9776;</span>
+    <div class="divulgar-container">
+        <button onclick="window.location.href='colaborador.html'" class="voltar-btn">← Voltar</button>
+        <h1 class="divulgar-titulo">Meu Painel</h1>
+        <div id="painelConteudo"></div>
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        // Exemplo de dados fictícios
+        const colaborador = {
+            tipo: 'campeonato', // ou 'arena'
+            campeonato: {
+                nome: "Muay Thai Estadual",
+                inscricoes: [
+                    { nome: "João Silva", email: "joao@email.com", telefone: "99999-9999" },
+                    { nome: "Maria Souza", email: "maria@email.com", telefone: "98888-8888" }
+                ]
+            },
+            arena: {
+                nome: "Arena Fight",
+                endereco: "Rua das Lutas, 123",
+                cidade: "São Paulo/SP",
+                infraestrutura: "Tatame, Octógono, Vestiários",
+                descricao: "Arena completa para eventos de luta."
+            }
+        };
+        let html = "";
+        if (colaborador.tipo === 'campeonato') {
+            html += `<h2 style="color:#FFD700;">Meu Campeonato</h2>
+                <p><b>Nome:</b> ${colaborador.campeonato.nome}</p>
+                <p><b>Inscrições:</b> ${colaborador.campeonato.inscricoes.length}</p>
+                <h3 style="color:#FFD700;">Inscritos:</h3>
+                <ul style="background:#222; border-radius:10px; padding:16px;">`;
+            colaborador.campeonato.inscricoes.forEach(i => {
+                html += `<li style="margin-bottom:8px;"><b>${i.nome}</b> - ${i.email} - ${i.telefone}</li>`;
+            });
+            html += `</ul>
+            <blockquote style="color:#C2131E; font-size:18px; font-style:italic; margin-top:12px;">"Acompanhe seus inscritos e mantenha todos informados!"</blockquote>`;
+        } else {
+            html += `<h2 style="color:#C2131E;">Minha Arena</h2>
+                <p><b>Nome:</b> ${colaborador.arena.nome}</p>
+                <p><b>Endereço:</b> ${colaborador.arena.endereco}</p>
+                <p><b>Cidade:</b> ${colaborador.arena.cidade}</p>
+                <p><b>Infraestrutura:</b> ${colaborador.arena.infraestrutura}</p>
+                <p><b>Descrição:</b> ${colaborador.arena.descricao}</p>
+                <button onclick="editarArena()" class="voltar-btn" style="margin-top:18px;">Editar Arena</button>
+                <blockquote style="color:#FFD700; font-size:18px; font-style:italic; margin-top:12px;">"Mantenha sua arena atualizada e atraente para novos eventos!"</blockquote>`;
+        }
+        document.getElementById('painelConteudo').innerHTML = html;
+        function editarArena() {
+            alert('Função de edição de arena em desenvolvimento!');
+        }
+    </script>
+</body>
+</html>

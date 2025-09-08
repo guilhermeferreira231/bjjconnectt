@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Área do Colaborador</title>
+    <link rel="stylesheet" href="divulgarcampeonato.css">
+</head>
+<body>
+    <div class="side-menu" id="sideMenu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="colaborador.html" class="active">Área do Colaborador</a>
+        <a href="divulgarcampeonato.html">Divulgar Campeonato</a>
+        <a href="divulgararena.html">Divulgar Arena</a>
+        <a href="painelcolaborador.html">Painel do Colaborador</a>
+        <!-- Bloco do usuário logado, agora clicável -->
+        <a href="meusdados.html" id="userMenu" style="color:#fff; text-decoration:none; font-size:17px; font-weight:600; margin-bottom:8px; margin-top:32px; display:flex; align-items:center;">
+          <span style="font-size:20px; margin-right:6px;">👤</span>
+          <span id="userNameMenu"></span>
+        </a>
+        <button id="logoutBtn" style="background:#d32f2f; color:#fff; border:none; border-radius:6px; padding:6px 14px; cursor:pointer; margin-top:12px; margin-bottom:48px; display:block;">
+          Sair
+        </button>
+    </div>
+    <span class="menu-icon" onclick="openMenu()">&#9776;</span>
+    <div class="divulgar-container" style="text-align:center;">
+        <button onclick="window.location.href='login.html'" class="voltar-btn" style="float:left;">← Voltar para login</button>
+        <h1 class="divulgar-titulo" style="margin-top:18px;">Bem-vindo, Colaborador!</h1>
+        <p class="divulgar-info" style="margin-bottom:24px;">
+            Aqui você pode divulgar campeonatos e arenas, acompanhar suas inscrições e editar suas informações.<br>
+            <span style="color:#FFD700; font-weight:700;">Aproveite para movimentar o esporte na sua região!</span>
+        </p>
+        <div style="display:flex; justify-content:center; gap:32px; margin-bottom:32px;">
+            <button onclick="window.location.href='divulgarcampeonato.html'" class="voltar-btn" style="background:#d32f2f; color:#fff;">Divulgar campeonato</button>
+            <button onclick="window.location.href='divulgararena.html'" class="voltar-btn" style="background:#FFD700; color:#C2131E;">Divulgar arena</button>
+        </div>
+        <div style="margin-bottom:24px;">
+            <span style="font-size:18px; color:#fff;">Caso já adicionou clique aqui:</span>
+            <button onclick="window.location.href='painelcolaborador.html'" class="voltar-btn" style="background:#222; color:#FFD700; margin-left:8px;">Ver meus dados</button>
+        </div>
+        <div style="margin-top:32px; background:#222; border-radius:14px; padding:18px; box-shadow:0 2px 12px #FFD70022;">
+            <h2 style="color:#FFD700;">Dicas para Colaboradores</h2>
+            <ul style="text-align:left; color:#fff; font-size:17px;">
+                <li>Divulgue eventos com fotos e informações completas.</li>
+                <li>Responda dúvidas dos inscritos rapidamente.</li>
+                <li>Mantenha seus dados atualizados para facilitar contato.</li>
+                <li>Use frases motivacionais para engajar atletas!</li>
+            </ul>
+            <blockquote style="color:#C2131E; font-size:18px; font-style:italic; margin-top:12px;">"O esporte transforma vidas. Seja protagonista!"</blockquote>
+        </div>
+    </div>
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        function showUserInMenu() {
+          const user = localStorage.getItem('userName');
+          const userNameMenu = document.getElementById('userNameMenu');
+          const userMenu = document.getElementById('userMenu');
+          const logoutBtn = document.getElementById('logoutBtn');
+
+          if (user && userMenu && userNameMenu && logoutBtn) {
+            userMenu.style.display = 'flex';
+            userNameMenu.textContent = user;
+            logoutBtn.style.display = 'block';
+            logoutBtn.onclick = function() {
+              localStorage.removeItem('userName');
+              localStorage.removeItem('userTipo');
+              localStorage.removeItem('usuario_id');
+              userMenu.style.display = 'none';
+              logoutBtn.style.display = 'none';
+              window.location.href = 'login.html';
+            };
+          } else {
+            if (userMenu) userMenu.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+          }
+        }
+
+        window.onload = showUserInMenu;
+    </script>
+</body>
+</html>

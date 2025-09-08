@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body>
+
+<div id="sideMenu" class="side-menu">
+  <button class="close-btn" onclick="closeMenu()">&times;</button>
+  <a href="paginainicial.html" style="margin-top:32px; display:block;">Página Inicial</a>
+  <a href="cadastro.html" style="display:block;">Cadastro/Login</a>
+  <a href="arenas.html">Academias</a>
+  <a href="campeonatos.html">Campeonatos</a>
+  <a href="redesociais.html">Redes Sociais</a>
+</div>
+
+<button class="open-btn" onclick="openMenu()">&#9776;</button>
+
+<div class="txt1">
+  <h1>Login</h1>
+</div>
+<form id="loginForm">
+  <div style="width: 100vw; max-width: 100vw; display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 520px; max-width: 95vw; display: flex; flex-direction: column; align-items: center;">
+      <div style="width: 100%; max-width: 520px; display: flex; flex-direction: column; align-items: center; gap: 0;">
+        <div style="width: 300px; max-width: 95vw; display: flex; flex-direction: row; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <input class="inps" id="loginEmail" type="text" name="email" placeholder="  E-mail" required style="height: 28px; font-size: 14px; width: 300px;">
+        </div>
+        <div style="width: 300px; max-width: 95vw; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; margin-top: -10px; margin-bottom: 8px; min-height: 20px;">
+          <span id="emailError" style="color:#d32f2f; font-size:13px; margin-left:2px; white-space:normal; visibility:hidden; min-width:100px; height:18px; display:flex; align-items:center; justify-content:left;"></span>
+        </div>
+        <div style="width: 300px; max-width: 95vw; display: flex; flex-direction: row; align-items: center; justify-content: center; position: relative; margin-bottom: 12px;">
+          <input class="inps" id="loginSenha" type="password" name="senha" placeholder="  Senha" required minlength="8" maxlength="16" style="height: 28px; font-size: 14px; width: 300px;">
+          <button type="button" id="toggleSenhaLogin" style="background:none; border:none; cursor:pointer; color:#d32f2f; font-size:11px; padding:0 2px; margin-left:2px; position:absolute; right:8px; top:50%; transform:translateY(-50%);">Ver senha</button>
+        </div>
+        <div style="width: 300px; max-width: 95vw; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; margin-top: -10px; margin-bottom: 8px; min-height: 20px; position: relative;">
+          <span id="senhaError" style="color:#d32f2f; font-size:13px; margin-left:2px; white-space:normal; visibility:hidden; min-width:100px; height:18px; display:flex; align-items:center; justify-content:left;"></span>
+          <span id="senhaInfo" style="color:#d32f2f; font-size:11px; margin-left:2px; margin-top:2px; transition:color 0.2s; display: flex; align-items: center;"><span id="senhaInfoIcon" style="font-size:15px; color:#d32f2f; font-weight:bold; margin-right:7px; display:flex; align-items:center; line-height:1; height:1em;">×</span> A senha deve ter entre 8 e 16 caracteres.</span>
+          <span id="senhaRequisitoMinuscula" style="color:#d32f2f; font-size:11px; margin-left:2px; margin-top:2px; transition:color 0.2s; display: flex; align-items: center;"><span id="senhaMinusculaIcon" style="font-size:15px; color:#d32f2f; font-weight:bold; margin-right:7px; display:flex; align-items:center; line-height:1; height:1em;">×</span> A senha deve ter pelo menos uma letra minúscula.</span>
+          <span id="senhaRequisitoMaiuscula" style="color:#d32f2f; font-size:11px; margin-left:2px; margin-top:2px; transition:color 0.2s; display: flex; align-items: center;"><span id="senhaMaiusculaIcon" style="font-size:15px; color:#d32f2f; font-weight:bold; margin-right:7px; display:flex; align-items:center; line-height:1; height:1em;">×</span> A senha deve ter pelo menos uma letra maiúscula.</span>
+        </div>
+        <div style="width: 300px; max-width: 95vw; display: flex; flex-direction: row; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <select name="tipo" id="loginTipo" required style="margin-bottom:12px; height: 28px; font-size: 14px; width: 300px;">
+            <option value="atleta">Atleta</option>
+            <option value="colaborador">Colaborador</option>
+          </select>
+        </div>
+        <div style="width: 520px; max-width: 95vw; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: -8px;">
+          <button class="btn" type="submit">Entrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var senhaInput = document.getElementById('loginSenha');
+  var senhaInfo = document.getElementById('senhaInfo');
+  var senhaInfoIcon = document.getElementById('senhaInfoIcon');
+  var senhaRequisitoMinuscula = document.getElementById('senhaRequisitoMinuscula');
+  var senhaMinusculaIcon = document.getElementById('senhaMinusculaIcon');
+  var senhaRequisitoMaiuscula = document.getElementById('senhaRequisitoMaiuscula');
+  var senhaMaiusculaIcon = document.getElementById('senhaMaiusculaIcon');
+  var toggleSenha = document.getElementById('toggleSenhaLogin');
+  senhaInput.addEventListener('input', function() {
+    if (senhaInput.value.length >= 8 && senhaInput.value.length <= 16) {
+      senhaInfo.style.color = '#388e3c';
+      senhaInfoIcon.textContent = '✓';
+      senhaInfoIcon.style.color = '#388e3c';
+      senhaInfoIcon.style.background = 'transparent';
+    } else {
+      senhaInfo.style.color = '#d32f2f';
+      senhaInfoIcon.textContent = '×';
+      senhaInfoIcon.style.color = '#d32f2f';
+      senhaInfoIcon.style.background = 'transparent';
+    }
+    const temMinuscula = /[a-z]/.test(senhaInput.value);
+    if (temMinuscula) {
+      senhaRequisitoMinuscula.style.color = '#388e3c';
+      senhaMinusculaIcon.textContent = '✓';
+      senhaMinusculaIcon.style.color = '#388e3c';
+      senhaMinusculaIcon.style.background = 'transparent';
+    } else {
+      senhaRequisitoMinuscula.style.color = '#d32f2f';
+      senhaMinusculaIcon.textContent = '×';
+      senhaMinusculaIcon.style.color = '#d32f2f';
+      senhaMinusculaIcon.style.background = 'transparent';
+    }
+    const temMaiuscula = /[A-Z]/.test(senhaInput.value);
+    if (temMaiuscula) {
+      senhaRequisitoMaiuscula.style.color = '#388e3c';
+      senhaMaiusculaIcon.textContent = '✓';
+      senhaMaiusculaIcon.style.color = '#388e3c';
+      senhaMaiusculaIcon.style.background = 'transparent';
+    } else {
+      senhaRequisitoMaiuscula.style.color = '#d32f2f';
+      senhaMaiusculaIcon.textContent = '×';
+      senhaMaiusculaIcon.style.color = '#d32f2f';
+      senhaMaiusculaIcon.style.background = 'transparent';
+    }
+  });
+  if (toggleSenha) {
+    toggleSenha.addEventListener('click', function() {
+      if (senhaInput.type === 'password') {
+        senhaInput.type = 'text';
+        toggleSenha.textContent = 'Esconder senha';
+      } else {
+        senhaInput.type = 'password';
+        toggleSenha.textContent = 'Ver senha';
+      }
+    });
+  }
+});
+
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "220px";
+  document.getElementById("sideMenu").style.left = "0";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+function showUserInMenu() {
+  const user = localStorage.getItem('userName');
+  let userDiv = document.getElementById('userMenu');
+  if (!userDiv) {
+    userDiv = document.createElement('div');
+    userDiv.id = 'userMenu';
+    userDiv.style.color = '#fff';
+    userDiv.style.fontSize = '16px';
+    userDiv.style.margin = '32px 0 24px 24px';
+    userDiv.style.position = 'absolute';
+    userDiv.style.bottom = '0';
+    userDiv.style.left = '0';
+    userDiv.style.width = '90%';
+    userDiv.style.justifyContent = 'flex-start';
+    userDiv.style.display = 'flex';
+    userDiv.style.alignItems = 'center';
+    document.getElementById('sideMenu').appendChild(userDiv);
+  }
+  if (user) {
+    userDiv.innerHTML = `
+      <span style="font-size:20px; margin-right:6px;">👤</span> ${user}
+      <button id="logoutBtn" style="margin-left:18px; background:#d32f2f; color:#fff; border:none; border-radius:6px; padding:6px 14px; cursor:pointer;">Sair</button>
+    `;
+    userDiv.style.display = 'flex';
+    document.getElementById('logoutBtn').onclick = function() {
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userTipo');
+      window.location.href = 'login.html';
+    };
+  } else {
+    userDiv.style.display = 'none';
+  }
+}
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const email = e.target.email.value.trim();
+  const senha = e.target.senha.value.trim();
+  const tipo = document.getElementById('loginTipo').value;
+
+  fetch('php/api/usuarios.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      login: 1,
+      email,
+      senha,
+      tipo
+    }),
+    credentials: 'include'
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === 'success') {
+      localStorage.setItem('userName', data.nome);
+      localStorage.setItem('userTipo', data.tipo);
+      localStorage.setItem('usuario_id', data.usuario_id);
+      if (data.tipo === 'colaborador') {
+        window.location.href = 'colaborador.html'; // Redireciona colaborador
+      } else {
+        window.location.href = 'paginainicial.html'; // Redireciona atleta
+      }
+    } else {
+      alert(data.message || 'Login inválido');
+    }
+  });
+});
+
+window.onload = showUserInMenu;
+</script>
+</body>
+</html>

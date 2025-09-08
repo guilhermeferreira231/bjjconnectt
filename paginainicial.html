@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="paginainicial.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Pagina inicial</title>
+    <style>
+      body {
+        min-height: 100vh;
+        background: #000;
+        position: relative;
+        overflow: hidden;
+      }
+
+    </style>
+</head>
+<body>
+
+<div id="sideMenu" class="side-menu" style="display:flex; flex-direction:column; height:100vh; min-width:220px;">
+  <button class="close-btn" onclick="closeMenu()">&times;</button>
+  <div style="display:flex; flex-direction:column; flex:1 1 auto; justify-content:flex-start;">
+    <a href="paginainicial.html" style="display:block; margin-top:32px;">Página Inicial</a>
+    <a href="cadastro.html" style="display:block;">Cadastro/Login</a>
+    <a href="arenas.html">Academias</a>
+    <a href="campeonato.html">Campeonatos</a>
+    <a href="redesocial.html">Redes Sociais</a>
+    <a href="meusdadosparticipante.html">Meus Dados</a>
+    <a href="divulgarcampeonato.html" id="divulgarCampeonatoLink" style="display:none;">Divulgar Campeonato</a>
+    <a href="divulgararena.html" id="divulgarArenaLink" style="display:none;">Divulgar Arena</a>
+  </div>
+  <div id="userMenuContainer" style="position:absolute; bottom:24px; left:0; width:90%; display:flex; flex-direction:column; align-items:flex-start;">
+    <a href="minha-conta.html" id="userMenu" style="color:#fff; text-decoration:none; font-size:17px; font-weight:600; margin-bottom:8px; margin-top:32px; display:none;">
+      <span style="font-size:20px; margin-right:6px;">👤</span>
+      <span id="userNameMenu"></span>
+    </a>
+    <button id="logoutBtn" style="background:#d32f2f; color:#fff; border:none; border-radius:6px; padding:6px 14px; cursor:pointer; margin-top:12px; margin-bottom:48px; display:none;">
+      Sair
+    </button>
+  </div>
+</div>
+
+<button class="open-btn" onclick="openMenu()">&#9776;</button>
+
+
+<div class="txt1">
+  <h1>Bem-vindo ao Portal de Quadras, Academias e Competições!</h1>
+  <p style="color:#fff; font-size:16px; margin-top:18px;">Use o menu ao lado para navegar pelo site.</p>
+</div>
+
+<script>
+
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "220px";
+  document.getElementById("sideMenu").style.left = "0";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+function showUserInMenu() {
+  const userTipo = localStorage.getItem('userTipo');
+  // Exibe links exclusivos para colaborador
+  const divulgarCampeonatoLink = document.getElementById('divulgarCampeonatoLink');
+  const divulgarArenaLink = document.getElementById('divulgarArenaLink');
+
+  if (userTipo === 'colaborador') {
+    if (divulgarCampeonatoLink) divulgarCampeonatoLink.style.display = 'block';
+    if (divulgarArenaLink) divulgarArenaLink.style.display = 'block';
+  } else {
+    if (divulgarCampeonatoLink) divulgarCampeonatoLink.style.display = 'none';
+    if (divulgarArenaLink) divulgarArenaLink.style.display = 'none';
+  }
+
+  const user = localStorage.getItem('userName');
+  const userNameMenu = document.getElementById('userNameMenu');
+  const userMenu = document.getElementById('userMenu');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const cadastroLink = document.querySelector('a[href="cadastro.html"]');
+
+  if (user && userMenu && userNameMenu && logoutBtn) {
+    userMenu.style.display = 'block';
+    userNameMenu.textContent = user;
+    logoutBtn.style.display = 'block';
+    if (cadastroLink) cadastroLink.style.display = 'none';
+    logoutBtn.onclick = function() {
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userTipo');
+      localStorage.removeItem('usuario_id');
+      userMenu.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      if (cadastroLink) cadastroLink.style.display = 'block';
+      window.location.href = 'login.html';
+    };
+  } else {
+    if (userMenu) userMenu.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+    if (cadastroLink) cadastroLink.style.display = 'block';
+  }
+}
+
+window.onload = showUserInMenu;
+</script>
+</body>
+</html>

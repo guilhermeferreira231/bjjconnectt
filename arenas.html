@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arenas</title>
+    <link rel="stylesheet" href="arena.css">
+    <style>
+    /* Modal styles */
+    .arena-modal-bg {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.7);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    .arena-modal-bg.active {
+        display: flex;
+    }
+    .arena-modal {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+        padding: 32px 32px 24px 32px;
+        max-width: 600px;
+        width: 90vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        animation: modalShow 0.4s cubic-bezier(.77,0,.18,1);
+    }
+    @keyframes modalShow {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+    .arena-modal-img {
+        width: 90%;
+        height: 260px;
+        background: #111;
+        color: #C2131E;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: bold;
+        border-radius: 12px;
+        border: 3px solid #C2131E;
+        margin-bottom: 24px;
+    }
+    .arena-modal-text {
+        font-size: 26px;
+        color: #222;
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+    .arena-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        font-size: 32px;
+        background: none;
+        border: none;
+        color: #C2131E;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+
+ <div id="sideMenu" class="side-menu">
+      <button class="close-btn" onclick="closeMenu()">&times;</button>
+      <div style="display:flex; flex-direction:column; flex:1 1 auto; justify-content:flex-start;">
+        <a href="paginainicial.html" style="display:block; margin-top:32px;">Página Inicial</a>
+        <a href="cadastro.html" style="display:block;">Cadastro/Login</a>
+        <a href="arenas.html">Academias</a>
+        <a href="campeonatos.html">Campeonatos</a>
+        <a href="redesociais.html">Redes Sociais</a>
+      </div>
+      <div id="userMenuContainer" style="width:100%; margin-left:0; margin-bottom:0; position:sticky; bottom:80px; background:transparent;">
+        <a href="minha-conta.html" id="userMenu" style="color:#fff; text-decoration:none; font-size:16px; display:flex; align-items:center; justify-content:flex-start; cursor:pointer; min-height:56px; width:100%; height:56px; text-align:left; padding-left:48px;">
+          <div style="display:flex; flex-direction:column; align-items:flex-start; justify-content:center; width:100%; height:100%; text-align:left; position:relative; top:50%; transform:translateY(-50%);">
+            <div style="font-weight:600; font-size:17px; margin-bottom:2px; width:100%; text-align:left;">Minha conta</div>
+            <div style="display:flex; align-items:center; justify-content:flex-start; width:100%; text-align:left;">
+              <span style="font-size:20px; margin-right:6px;">👤</span>
+              <span id="userNameMenu"></span>
+            </div>
+          </div>
+        </a>
+        <div style="display:flex; align-items:center; width:100%;">
+          <button id="logoutBtn" style="display:none; margin-top:10px; margin-left:33px; background:linear-gradient(90deg,#d32f2f 60%,#b71c1c 100%); color:#fff; border:none; border-radius:6px; padding:7px 18px; font-size:15px; font-weight:600; cursor:pointer; min-width:90px; max-width:140px; box-shadow:0 2px 8px rgba(0,0,0,0.10); letter-spacing:0.5px; transition:background 0.2s,box-shadow 0.2s; outline:none; display:none; align-self:flex-start; text-align:center; width:140px; justify-content:center;">Sair</button>
+        </div>
+      </div>
+   </div>
+   <button class="open-btn" onclick="openMenu()">&#9776;</button>
+   <script>
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "220px";
+  document.getElementById("sideMenu").style.left = "0";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+// Só mostra usuário se estiver logado
+function showUserInMenu() {
+  const userNameMenu = document.getElementById('userNameMenu');
+  const userMenu = document.getElementById('userMenu');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const userMenuContainer = document.getElementById('userMenuContainer');
+  let user = localStorage.getItem('userName');
+  if (user && userNameMenu && userMenu && logoutBtn && userMenuContainer) {
+    userMenu.style.display = 'flex';
+    userNameMenu.textContent = user;
+    logoutBtn.style.display = 'block';
+    userMenuContainer.style.display = 'block';
+  } else if (userMenu && logoutBtn && userMenuContainer) {
+    userMenu.style.display = 'none';
+    logoutBtn.style.display = 'none';
+    userMenuContainer.style.display = 'none';
+  }
+  if (logoutBtn) {
+    logoutBtn.onclick = function() {
+      localStorage.removeItem('userName');
+      showUserInMenu();
+      window.location.href = 'login.html';
+    };
+  }
+}
+   </script>
+    <!-- FIM DO MENU -->
+
+    <h1 class="main-title">ARENAS</h1>
+    <div class="arenas-container">
+        <!-- 6 linhas de arenas -->
+        <div class="arena-section">
+            <div class="arena-title">Futvôlei</div>
+            <div class="arena-row">
+                <button class="arrow-btn left" onclick="scrollArenas(0, -1)">&#8592;</button>
+                <div class="arena-list">
+                    <div class="arena-list-inner" id="arena-list-inner-0"></div>
+                </div>
+                <button class="arrow-btn right" onclick="scrollArenas(0, 1)">&#8594;</button>
+            </div>
+        </div>
+        <div class="arena-section">
+            <div class="arena-title">TÍTULO SPORT 2</div>
+            <div class="arena-row">
+                <button class="arrow-btn left" onclick="scrollArenas(1, -1)">&#8592;</button>
+                <div class="arena-list">
+                    <div class="arena-list-inner" id="arena-list-inner-1"></div>
+                </div>
+                <button class="arrow-btn right" onclick="scrollArenas(1, 1)">&#8594;</button>
+            </div>
+        </div>
+        <div class="arena-section">
+            <div class="arena-title">TÍTULO SPORT 3</div>
+            <div class="arena-row">
+                <button class="arrow-btn left" onclick="scrollArenas(2, -1)">&#8592;</button>
+                <div class="arena-list">
+                    <div class="arena-list-inner" id="arena-list-inner-2"></div>
+                </div>
+                <button class="arrow-btn right" onclick="scrollArenas(2, 1)">&#8594;</button>
+            </div>
+        </div>
+        <div class="arena-section">
+            <div class="arena-title">TÍTULO SPORT 4</div>
+            <div class="arena-row">
+                <button class="arrow-btn left" onclick="scrollArenas(3, -1)">&#8592;</button>
+                <div class="arena-list">
+                    <div class="arena-list-inner" id="arena-list-inner-3"></div>
+                </div>
+                <button class="arrow-btn right" onclick="scrollArenas(3, 1)">&#8594;</button>
+            </div>
+        </div>
+        <div class="arena-section">
+            <div class="arena-title">TÍTULO SPORT 5</div>
+            <div class="arena-row">
+                <button class="arrow-btn left" onclick="scrollArenas(4, -1)">&#8592;</button>
+                <div class="arena-list">
+                    <div class="arena-list-inner" id="arena-list-inner-4"></div>
+                </div>
+                <button class="arrow-btn right" onclick="scrollArenas(4, 1)">&#8594;</button>
+            </div>
+        </div>
+        <div class="arena-section">
+            <div class="arena-title">TÍTULO SPORT 6</div>
+            <div class="arena-row">
+                <button class="arrow-btn left" onclick="scrollArenas(5, -1)">&#8592;</button>
+                <div class="arena-list">
+                    <div class="arena-list-inner" id="arena-list-inner-5"></div>
+                </div>
+                <button class="arrow-btn right" onclick="scrollArenas(5, 1)">&#8594;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para arena -->
+    <div class="arena-modal-bg" id="arenaModalBg">
+        <div class="arena-modal" id="arenaModal">
+            <button class="arena-modal-close" onclick="closeArenaModal()">&times;</button>
+            <div class="arena-modal-img" id="arenaModalImg"></div>
+            <div class="arena-modal-text" id="arenaModalText"></div>
+        </div>
+    </div>
+
+    <script>
+        let arenasData = [[], [], [], [], [], []]; // 6 linhas, para organizar por tipo se quiser
+
+function fetchArenas() {
+    fetch('php/api/arenas.php')
+    .then(res => res.json())
+    .then(data => {
+        // Distribui arenas nas linhas (aqui, só para exemplo, coloca todas na primeira linha)
+        arenasData[0] = data.map(arena => ({
+            header: arena.nome,
+            img: arena.imagem ? `<img src="${arena.imagem}" style="width:100%;height:100%;object-fit:cover;">` : "IMG",
+            text: `${arena.endereco}, ${arena.cidade_estado}`,
+            modalText: `${arena.infraestrutura}\n\n${arena.descricao}`
+        }));
+        // Limpa as outras linhas
+        for (let i = 1; i < 6; i++) arenasData[i] = [];
+        for (let i = 0; i < arenasData.length; i++) {
+            renderArenas(i);
+        }
+    });
+}
+
+window.onload = function() {
+    showUserInMenu();
+    fetchArenas();
+};
+window.onresize = function() {
+    for (let i = 0; i < arenasData.length; i++) {
+        renderArenas(i);
+    }
+};
+    </script>
+</body>
+</html>

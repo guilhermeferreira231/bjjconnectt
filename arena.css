@@ -1,0 +1,216 @@
+body {
+    background: #000;
+    color: #C2131E;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 48px;
+    margin: 32px 0 24px 0;
+    color: #C2131E;
+    letter-spacing: 4px;
+}
+
+.arenas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    width: 100vw;
+}
+
+.arena-section {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.arena-title {
+    color: #C2131E;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+/* MENU LATERAL */
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: #222;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+}
+.side-menu a {
+  padding: 12px 32px 12px 24px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
+  display: block;
+  transition: 0.2s;
+}
+.side-menu a:hover {
+  background: #C2131E;
+  color: #fff;
+}
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 32px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+.open-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  font-size: 28px;
+  background: #C2131E;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: background 0.2s;
+}
+.open-btn:hover {
+  background: #a50d16;
+}
+
+.arena-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+}
+
+.arena-list {
+    display: flex;
+    gap: 32px;
+    width: 80vw;
+    max-width: 1600px;
+    min-width: 600px;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+}
+
+.arena-list-inner {
+    display: flex;
+    gap: 40px; /* aumenta o espaçamento entre as arenas */
+    transition: transform 0.7s cubic-bezier(.77,0,.18,1);
+    will-change: transform;
+}
+
+.arena-card {
+    background: #d32f2f;
+    border-radius: 18px;
+    width: calc((80vw - 64px) / 3); /* 3 arenas + 2 gaps */
+    min-width: 320px;
+    max-width: 500px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    position: relative;
+    padding: 18px 0 0 0;
+}
+
+.arena-header {
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.arena-img {
+    background: #111;
+    color: #C2131E;
+    width: 80%;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 3px solid #fff;
+}
+
+.arena-text {
+    background: #bdbdbd;
+    color: #222;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 32px;
+    padding: 32px 0; /* altura maior */
+    width: 80%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+.arrow-btn {
+    background: #bdbdbd;
+    color: #C2131E;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: background 0.2s, color 0.2s;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-btn:hover {
+    background: #C2131E;
+}
+
+.arena-modal-img {
+    width: 90%;
+    min-height: 260px;
+    background: #fff; /* fundo branco */
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    border-radius: 12px;
+    border: 3px solid #C2131E;
+    margin-bottom: 24px;
+    padding: 0;
+}
+
+.arena-modal-img img {
+    width: 100%;
+    height: 240px; /* altura fixa para imagem */
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+    background: #fff;
+}

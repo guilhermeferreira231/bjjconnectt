@@ -1,0 +1,260 @@
+body {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.txt1 {
+    color: #C2131E;
+    font-size: 10px;
+    font-family:"Roboto";
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.txt1 h1 {
+    color: #FFD700;
+    font-size: 2.7em;
+    font-weight: 700;
+    margin-bottom: 18px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+}
+
+.cadastro-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    width: 100%;
+}
+
+form {
+    background: #222;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px #FFD70033;
+    padding: 38px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-bottom: 18px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 1.1em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+    background: #444;
+    box-shadow: 0 0 0 2px #FFD70055;
+}
+
+form button[type="submit"] {
+    background: #FFD700;
+    color: #C2131E;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 0;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px #FFD70033;
+}
+
+form button[type="submit"]:hover {
+    background: #e6c200;
+    transform: translateY(-2px) scale(1.03);
+}
+
+.btn {
+    margin-top: 0;
+    font-size: 1.1em;
+    font-weight: 700;
+    background: #FFD700;
+    color: #C2131E;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    width: 100%;
+    max-width: 400px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px #FFD70033;
+    display: block;
+}
+
+.btn:hover {
+    background: #e6c200;
+    transform: translateY(-2px) scale(1.03);
+}
+
+#modalColaborador {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalColaborador > div {
+    background: #222;
+    border-radius: 18px;
+    padding: 38px 32px;
+    max-width: 400px;
+    width: 90vw;
+    box-shadow: 0 8px 40px #FFD70055;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: modalShow 0.5s;
+}
+
+#modalColaborador h2 {
+    color: #FFD700;
+    font-size: 26px;
+    margin-bottom: 18px;
+    font-weight: 900;
+}
+
+#modalColaborador input[type="text"],
+#modalColaborador input[type="email"],
+#modalColaborador input[type="password"] {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+}
+
+#modalColaborador button[type="submit"] {
+    background: #FFD700;
+    color: #C2131E;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px #FFD70033;
+}
+
+#modalColaborador button[type="submit"]:hover {
+    background: #e6c200;
+    transform: translateY(-2px) scale(1.03);
+}
+
+#colaboradorSucesso {
+    display: none;
+    background: #25D366;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+
+.close-btn {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 32px;
+    color: #C2131E;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.open-btn {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    font-size: 28px;
+    background: #C2131E;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: background 0.2s;
+}
+
+.open-btn:hover {
+    background: #a50d16;
+}
+
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #222;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+}
+
+.side-menu a {
+    padding: 12px 32px 12px 24px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    transition: 0.2s;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.side-menu a:hover {
+    background: #C2131E;
+    color: #fff;
+}
+
+@keyframes modalShow {
+    from { opacity: 0; transform: scale(0.95);}
+    to { opacity: 1; transform: scale(1);}
+}

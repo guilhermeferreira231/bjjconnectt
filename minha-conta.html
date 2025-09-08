@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Minha Conta</title>
+  <link rel="stylesheet" href="minha-conta.css">
+</head>
+<body>
+  <div id="sideMenu" class="side-menu">
+    <button class="close-btn" onclick="closeMenu()">&times;</button>
+    <a href="paginainicial.html">Página Inicial</a>
+    <a href="minha-conta.html">Minha Conta</a>
+    <a href="arenas.html">Academias</a>
+    <a href="campeonatos.html">Campeonatos</a>
+    <a href="redesociais.html">Redes Sociais</a>
+    <a href="login.html">Sair</a>
+  </div>
+  <button class="open-btn" onclick="openMenu()">&#9776;</button>
+
+  <div class="account-container">
+    <h1>Minha Conta</h1>
+    <div class="account-info">
+      <p><strong>Nome:</strong> <span id="accountName"></span></p>
+      <p><strong>Email:</strong> <span id="accountEmail"></span></p>
+      <p><strong>CPF:</strong> <span id="accountCPF"></span></p>
+      <div id="accountCampeonatos"></div>
+    </div>
+  </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "220px";
+    }
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+
+    function showAccountData() {
+      const usuario_id = localStorage.getItem('usuario_id');
+      if (!usuario_id) return;
+      fetch('php/api/minha-conta.php', {
+        method: 'POST',
+        body: new URLSearchParams({ usuario_id }),
+        credentials: 'include'
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('accountName').textContent = data.nome || '';
+        document.getElementById('accountEmail').textContent = data.email || '';
+        document.getElementById('accountCPF').textContent = data.cpf || '';
+        document.getElementById('accountCampeonatos').innerHTML = `<strong>Campeonatos inscritos:</strong> ${data.campeonatos_inscritos}`;
+      });
+    }
+
+    window.onload = function() {
+      showAccountData();
+    };
+  </script>
+</body>
+</html>

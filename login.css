@@ -1,0 +1,138 @@
+body {
+    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding-top: 60px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.txt1 {
+    color: #C2131E;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    margin-bottom: 32px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px 32px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    gap: 16px;
+    margin-top: 24px;
+    font-size: 15px;
+}
+
+.inps {
+    color: rgb(255, 255, 255);
+    font-family: "Roboto";
+    background-color: #383838;
+    border: none;
+    border-radius: 5px;
+    height: 22px;
+    width: 200px;
+    margin-bottom: 28px;
+    text-align: left;
+    display: block;
+    font-size: 14px;
+}
+
+.inps::placeholder {
+    text-align: left;
+    color: #bdbdbd;
+    opacity: 1;
+}
+
+.btn {
+    background: #d32f2f;
+    font-family: "Roboto";
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 7px;
+    padding: 7px 0;
+    height: 34px;
+    width: 100%;
+    max-width: 500px;
+    min-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 36px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn:hover {
+    background: #a50d16;
+}
+
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: #222;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+}
+.side-menu a {
+  padding: 12px 32px 12px 24px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
+  display: block;
+  transition: 0.2s;
+}
+.side-menu a:hover {
+  background: #C2131E;
+  color: #fff;
+}
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 32px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+.open-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  font-size: 28px;
+  background: #C2131E;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: background 0.2s;
+}
+.open-btn:hover {
+  background: #a50d16;
+}
+
+.esqueceu-senha-link {
+    margin-top: 5px;
+    display: inline-block;
+}

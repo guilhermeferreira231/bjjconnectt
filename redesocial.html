@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Rede Social</title>
+    <link rel="stylesheet" href="redesocial.css">
+</head>
+<body>
+    <!-- Menu lateral igual às outras páginas -->
+    <div class="side-menu" id="sideMenu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="paginainicial.html">Página Inicial</a>
+        <a href="cadastro.html">Cadastro/Login</a>
+        <a href="arenas.html">Academias</a>
+        <a href="campeonato.html">Campeonatos</a>
+        <a href="redesocial.html" class="active">Rede Social</a>
+    </div>
+    <span class="menu-icon" onclick="openMenu()">&#9776;</span>
+
+    <header class="social-header anim-fadein">
+        <h1>REDE SOCIAL Futbjj</h1>
+        <p>Conecte-se, inspire-se e compartilhe sua paixão pelo esporte!</p>
+    </header>
+
+    <section class="social-banner anim-slideup">
+        <img src="imagens/social_banner.png" alt="Banner Rede Social" class="banner-img anim-zoom">
+        <div class="banner-frases">
+            <blockquote class="anim-fadein-delay">"Aqui você encontra Campeonatos, organizadores e arenas."</blockquote>
+            <blockquote class="anim-fadein-delay2">"Junte-se à nossa rede e fique por dentro das novidades, eventos e campeonatos!"</blockquote>
+        </div>
+    </section>
+
+    <section class="social-about anim-slideleft">
+        <div class="about-imgs">
+            <img src="imagens/social1.png" alt="Atletas" class="anim-zoom-delay">
+            <img src="imagens/social2.png" alt="Competições" class="anim-zoom-delay2">
+            <img src="imagens/social3.png" alt="Comunidade" class="anim-zoom-delay3">
+        </div>
+        <div class="about-text">
+            <h2>Sobre o site</h2>
+            <p>
+                O futbjj é o seu espaço para descobrir novas academias, quadras e campeonatos, além de conhecer outros esportistas. Compartilhe suas experiências, encontre locais de treino e fique por dentro dos melhores eventos esportivos da região!
+            </p>
+        </div>
+    </section>
+
+    <section class="social-links anim-slideup-delay">
+        <h2>Redes Oficiais</h2>
+        <div class="social-buttons">
+            <a href="https://wa.me/SEUNUMERO" target="_blank" class="social-btn whatsapp anim-bounce">
+                <img src="imagens/whatsapp.png" alt="WhatsApp"> WhatsApp
+            </a>
+            <a href="https://instagram.com/SEUINSTAGRAM" target="_blank" class="social-btn instagram anim-bounce-delay">
+                <img src="imagens/instagram.png" alt="Instagram"> Instagram
+            </a>
+        </div>
+    </section>
+
+    <section class="mensagem-org anim-fadein-delay3">
+        <h2>Fale com a organização do site</h2>
+        <form class="mensagem-form" id="mensagemForm">
+            <input type="text" placeholder="Seu nome" required>
+            <input type="email" placeholder="Seu e-mail" required>
+            <textarea placeholder="Sua mensagem para a organização" required></textarea>
+            <button type="submit" class="anim-bounce">Enviar mensagem</button>
+        </form>
+        <div id="mensagemSucesso" class="mensagem-sucesso">Mensagem enviada para a organização! Em breve entraremos em contato.</div>
+    </section>
+
+    <footer class="social-footer anim-fadein">
+        <p>&copy; Futbjj - site criado em 2025, organizadores.</p>
+        <button id="avaliarBtn" class="avaliar-btn anim-bounce">Avalie nosso site</button>
+    </footer>
+
+    <!-- Modal de avaliação -->
+    <div id="avaliacaoModal" class="avaliacao-modal-bg">
+        <div class="avaliacao-modal anim-modal">
+            <button class="close-avaliacao" onclick="fecharAvaliacao()">&times;</button>
+            <h2>Avalie nosso site</h2>
+            <div class="estrelas" id="estrelasAvaliacao"></div>
+            <textarea id="comentarioAvaliacao" placeholder="Deixe um comentário (opcional)"></textarea>
+            <button onclick="enviarAvaliacao()" class="enviar-avaliacao-btn anim-bounce">Enviar avaliação</button>
+            <div id="avaliacaoSucesso" class="avaliacao-sucesso">Obrigado pela sua avaliação!</div>
+        </div>
+    </div>
+
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+
+        // Animações ao rolar
+        function animOnScroll() {
+            document.querySelectorAll('.anim-fadein, .anim-slideup, .anim-slideleft, .anim-zoom, .anim-bounce, .anim-fadein-delay, .anim-fadein-delay2, .anim-fadein-delay3, .anim-slideup-delay, .anim-zoom-delay, .anim-zoom-delay2, .anim-zoom-delay3, .anim-bounce-delay').forEach(function(el){
+                var rect = el.getBoundingClientRect();
+                if(rect.top < window.innerHeight - 60) {
+                    el.classList.add('anim-show');
+                }
+            });
+        }
+        window.addEventListener('scroll', animOnScroll);
+        window.addEventListener('load', animOnScroll);
+
+        // Mensagem de sucesso animada
+        document.getElementById('mensagemForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const nome = this[0].value;
+            const email = this[1].value;
+            const mensagem = this[2].value;
+
+            fetch('php/api/mensagem_site.php', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    nome,
+                    email,
+                    mensagem
+                }),
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    var msg = document.getElementById('mensagemSucesso');
+                    msg.classList.add('show');
+                    setTimeout(function(){ msg.classList.remove('show'); }, 3000);
+                    e.target.reset();
+                } else {
+                    alert(data.message || 'Erro ao enviar mensagem');
+                }
+            });
+        });
+
+        // Modal avaliação
+        const modal = document.getElementById('avaliacaoModal');
+        const btn = document.getElementById('avaliarBtn');
+        const estrelasDiv = document.getElementById('estrelasAvaliacao');
+        let estrelasSelecionadas = 0;
+
+        btn.onclick = function() {
+            modal.style.display = 'flex';
+            estrelasDiv.innerHTML = '';
+            estrelasSelecionadas = 0;
+            for(let i=1;i<=5;i++){
+                const star = document.createElement('span');
+                star.className = 'estrela';
+                star.innerHTML = '&#9733;';
+                star.onclick = function(){
+                    estrelasSelecionadas = i;
+                    atualizarEstrelas();
+                };
+                estrelasDiv.appendChild(star);
+            }
+            document.getElementById('comentarioAvaliacao').value = '';
+            document.getElementById('avaliacaoSucesso').style.display = 'none';
+            // animação quadrado
+            document.querySelector('.avaliacao-modal').classList.remove('anim-modal-hide');
+            document.querySelector('.avaliacao-modal').classList.add('anim-modal-show');
+        };
+        function atualizarEstrelas(){
+            const stars = estrelasDiv.querySelectorAll('.estrela');
+            stars.forEach((star,idx)=>{
+                star.style.color = idx < estrelasSelecionadas ? '#FFD700' : '#888';
+                star.style.transform = idx < estrelasSelecionadas ? 'scale(1.2)' : 'scale(1)';
+            });
+        }
+        function fecharAvaliacao(){
+            document.querySelector('.avaliacao-modal').classList.remove('anim-modal-show');
+            document.querySelector('.avaliacao-modal').classList.add('anim-modal-hide');
+            setTimeout(()=>{ modal.style.display = 'none'; }, 350);
+        }
+        function enviarAvaliacao(){
+  if(estrelasSelecionadas === 0){
+    alert('Selecione uma nota!');
+    return;
+  }
+  const comentario = document.getElementById('comentarioAvaliacao').value;
+  fetch('php/api/avaliacoes.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      tipo: 'site',
+      ref_id: 0,
+      nota: estrelasSelecionadas,
+      comentario
+    }),
+    credentials: 'include'
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === 'success') {
+      document.getElementById('avaliacaoSucesso').style.display = 'block';
+      setTimeout(fecharAvaliacao, 1800);
+    } else {
+      alert('Erro ao enviar avaliação');
+    }
+  });
+}
+        // Fecha modal ao clicar fora
+        modal.onclick = function(e){
+            if(e.target === modal) fecharAvaliacao();
+        };
+    </script>
+</body>
+</html>

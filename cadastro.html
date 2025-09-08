@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <title>Cadastro</title>
+</head>
+<body>
+
+
+<div id="sideMenu" class="side-menu">
+  <button class="close-btn" onclick="closeMenu()">&times;</button>
+  <a href="paginainicial.html" style="margin-top:32px; display:block;">Página Inicial</a>
+  <a href="cadastro.html" style="display:block;">Cadastro/Login</a>
+  <a href="arenas.html">Encontrar Academia</a>
+  <a href="campeonatos.html">Campeonatos</a>
+  <a href="redesociais.html">Redes Sociais</a>
+</div>
+
+<button class="open-btn" onclick="openMenu()">&#9776;</button>
+
+<div class="cadastro-container">
+  <div class="txt1">
+    <h1 style="font-size:2.7em; font-weight:700; color:#d32f2f; margin-bottom:18px; text-align:center; font-family:'Montserrat','Roboto',Arial,sans-serif; letter-spacing:0.5px;">Faça seu cadastro</h1>
+  </div>
+  <form id="cadastroForm">
+    <input type="text" name="Nome" placeholder="Nome completo" required>
+    <input type="email" name="Email" placeholder="E-mail" required>
+    <input type="password" name="Senha" placeholder="Senha" required>
+    <input type="text" name="cpf" placeholder="CPF" required>
+    <button type="submit">Realizar Cadastro</button>
+  </form>
+  <button type="button" id="btnCadastroColaborador" class="btn">
+  Cadastro colaborador
+  </button>
+  <button type="button" class="btn" onclick="window.location.href='login.html'">
+    Ir para Login
+  </button>
+</div>
+
+<!-- Modal de cadastro colaborador -->
+<div id="modalColaborador" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#1a1a1a; border-radius:18px; padding:38px 32px; max-width:400px; width:90vw; box-shadow:0 8px 40px #FFD70055; position:relative; display:flex; flex-direction:column; align-items:center; animation:modalShow 0.5s;">
+    <button onclick="fecharModalColaborador()" style="position:absolute; top:18px; right:24px; font-size:32px; color:#C2131E; background:none; border:none; cursor:pointer;">&times;</button>
+    <h2 style="color:#FFD700; font-size:26px; margin-bottom:18px; font-weight:900;">Cadastro Colaborador</h2>
+    <form id="formColaborador" style="display:flex; flex-direction:column; gap:16px; width:100%;">
+      <input type="text" name="nome" placeholder="Nome completo" required style="padding:12px; border-radius:8px; border:none; background:#333; color:#fff; font-size:18px;">
+      <input type="email" name="email" placeholder="E-mail" required style="padding:12px; border-radius:8px; border:none; background:#333; color:#fff; font-size:18px;">
+      <input type="password" name="senha" placeholder="Senha" required minlength="8" maxlength="16" style="padding:12px; border-radius:8px; border:none; background:#333; color:#fff; font-size:18px;">
+      <input type="text" name="cpf" placeholder="CPF" required style="padding:12px; border-radius:8px; border:none; background:#333; color:#fff; font-size:18px;">
+      <input type="text" name="telefone" placeholder="Telefone" required style="padding:12px; border-radius:8px; border:none; background:#333; color:#fff; font-size:18px;">
+      <button type="submit" style="background:#FFD700; color:#C2131E; font-size:20px; font-weight:bold; border:none; border-radius:10px; padding:12px 0; cursor:pointer; transition:background 0.2s, transform 0.2s;">Criar conta colaborador</button>
+    </form>
+    <div id="colaboradorSucesso" style="display:none; background:#25D366; color:#fff; font-size:18px; font-weight:bold; padding:10px 18px; border-radius:10px; margin-top:10px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.18);">Conta colaborador criada com sucesso!</div>
+  </div>
+</div>
+
+<script>
+
+// Menu lateral
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "220px";
+  document.getElementById("sideMenu").style.left = "0";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+// Formatar CPF
+function formatarCPF(input) {
+  let value = input.value.replace(/\D/g, "");
+  if (value.length > 11) value = value.slice(0, 11);
+  let formatted = value;
+  if (value.length > 9) {
+    formatted = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  } else if (value.length > 6) {
+    formatted = value.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+  } else if (value.length > 3) {
+    formatted = value.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+  }
+  input.value = formatted;
+}
+
+// Feedback visual dos requisitos de senha
+document.addEventListener('DOMContentLoaded', function() {
+  var senhaInput = document.getElementById('senhaInput');
+  var senhaInfo = document.getElementById('senhaInfo');
+  var senhaInfoIcon = document.getElementById('senhaInfoIcon');
+  var senhaRequisitoMinuscula = document.getElementById('senhaRequisitoMinuscula');
+  var senhaMinusculaIcon = document.getElementById('senhaMinusculaIcon');
+  var senhaRequisitoMaiuscula = document.getElementById('senhaRequisitoMaiuscula');
+  var senhaMaiusculaIcon = document.getElementById('senhaMaiusculaIcon');
+  var toggleSenha = document.getElementById('toggleSenha');
+  senhaInput.addEventListener('input', function() {
+    // Comprimento
+    if (senhaInput.value.length >= 8 && senhaInput.value.length <= 16) {
+      senhaInfo.style.color = '#388e3c'; // verde
+      senhaInfoIcon.textContent = '✓';
+      senhaInfoIcon.style.color = '#388e3c';
+      senhaInfoIcon.style.background = 'transparent';
+    } else {
+      senhaInfo.style.color = '#d32f2f'; // vermelho
+      senhaInfoIcon.textContent = '×';
+      senhaInfoIcon.style.color = '#d32f2f';
+      senhaInfoIcon.style.background = 'transparent';
+    }
+    // Requisito de minúscula
+    const temMinuscula = /[a-z]/.test(senhaInput.value);
+    if (temMinuscula) {
+      senhaRequisitoMinuscula.style.color = '#388e3c';
+      senhaMinusculaIcon.textContent = '✓';
+      senhaMinusculaIcon.style.color = '#388e3c';
+      senhaMinusculaIcon.style.background = 'transparent';
+    } else {
+      senhaRequisitoMinuscula.style.color = '#d32f2f';
+      senhaMinusculaIcon.textContent = '×';
+      senhaMinusculaIcon.style.color = '#d32f2f';
+      senhaMinusculaIcon.style.background = 'transparent';
+    }
+    // Requisito de maiúscula
+    const temMaiuscula = /[A-Z]/.test(senhaInput.value);
+    if (temMaiuscula) {
+      senhaRequisitoMaiuscula.style.color = '#388e3c';
+      senhaMaiusculaIcon.textContent = '✓';
+      senhaMaiusculaIcon.style.color = '#388e3c';
+      senhaMaiusculaIcon.style.background = 'transparent';
+    } else {
+      senhaRequisitoMaiuscula.style.color = '#d32f2f';
+      senhaMaiusculaIcon.textContent = '×';
+      senhaMaiusculaIcon.style.color = '#d32f2f';
+      senhaMaiusculaIcon.style.background = 'transparent';
+    }
+  });
+  if (toggleSenha) {
+    toggleSenha.addEventListener('click', function() {
+      if (senhaInput.type === 'password') {
+        senhaInput.type = 'text';
+        toggleSenha.textContent = 'Esconder senha';
+      } else {
+        senhaInput.type = 'password';
+        toggleSenha.textContent = 'Ver senha';
+      }
+    });
+  }
+});
+
+// Validação e cadastro
+
+document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const nome = e.target.Nome.value;
+  const email = e.target.Email.value;
+  const senha = e.target.Senha.value;
+  const cpf = e.target.cpf.value;
+
+  fetch('php/api/usuarios.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      cadastro: 1,
+      nome,
+      email,
+      senha,
+      cpf,
+      tipo: 'atleta'
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === 'success') {
+      // LOGIN AUTOMÁTICO APÓS CADASTRO
+      fetch('php/api/usuarios.php', {
+        method: 'POST',
+        body: new URLSearchParams({
+          login: 1,
+          email,
+          senha
+        }),
+        credentials: 'include'
+      })
+      .then(res => res.json())
+      .then(loginData => {
+        if (loginData.status === 'success') {
+          localStorage.setItem('userName', loginData.nome);
+          localStorage.setItem('userTipo', loginData.tipo);
+          localStorage.setItem('usuario_id', loginData.usuario_id);
+          window.location.href = 'paginainicial.html';
+        } else {
+          alert('Cadastro feito, mas não foi possível logar automaticamente.');
+          window.location.href = 'login.html';
+        }
+      });
+    } else {
+      alert('Erro ao cadastrar: ' + (data.message || 'Tente novamente'));
+    }
+  });
+});
+
+// Cadastro colaborador
+document.getElementById('btnCadastroColaborador').onclick = function() {
+  document.getElementById('modalColaborador').style.display = 'flex';
+  document.getElementById('colaboradorSucesso').style.display = 'none';
+  document.getElementById('formColaborador').reset();
+};
+function fecharModalColaborador(){
+  document.getElementById('modalColaborador').style.display = 'none';
+}
+document.getElementById('modalColaborador').onclick = function(e){
+  if(e.target === this) fecharModalColaborador();
+};
+document.getElementById('formColaborador').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nome = e.target.nome.value;
+  const email = e.target.email.value;
+  const senha = e.target.senha.value;
+  const cpf = e.target.cpf.value;
+  const telefone = e.target.telefone.value;
+
+  fetch('php/api/usuarios.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+      cadastro: 1,
+      nome,
+      email,
+      senha,
+      cpf,
+      telefone,
+      tipo: 'colaborador'
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === 'success') {
+      document.getElementById('colaboradorSucesso').style.display = 'block';
+      setTimeout(function() {
+        fecharModalColaborador();
+        window.location.href = 'login.html';
+      }, 1500);
+    } else {
+      alert('Erro ao cadastrar colaborador: ' + (data.message || 'Tente novamente'));
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+body {
+    margin: 0;
+    background: #000;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.carousel {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh; /* Agora ocupa a tela inteira */
+    min-height: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+    z-index: 2;
+    background: #000;
+}
+
+.carousel-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s;
+    z-index: 2;
+}
+.carousel-img.active {
+    opacity: 1;
+    z-index: 4;
+}
+/* Apenas a primeira imagem ativa fica mais escura */
+.carousel-img.active:first-of-type {
+    opacity: 0.50;
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(44,0,0,0.18);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-title {
+    color: #fff;
+    font-size: 2.8vw;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 2px 16px #000, 0 0 2px #222;
+    max-width: 80vw;
+    padding: 0;
+    background: none; /* remove a caixa */
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+.carousel-title .titulo-topo {
+    font-size: 3.5vw;
+    font-weight: bold;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.carousel-title .subtexto {
+    font-size: 1.6vw;
+    font-weight: 500;
+    margin-top: 0;
+}
+
+.campeonatos-list {
+    position: relative;
+    z-index: 20;
+    margin-top: 100vh; /* mantém o conteúdo abaixo do carrossel */
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 48px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 48px auto 0 auto;
+    max-width: 900px;
+    padding: 0 16px;
+}
+.campeonato-card {
+    width: 98vw;
+    max-width: 2000px;
+    margin: 0 auto;
+    border: 2px solid #d32f2f;
+    background: transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(80px) scale(0.98);
+    transition: opacity 1.2s cubic-bezier(.77,0,.18,1), transform 1.2s cubic-bezier(.77,0,.18,1);
+    background: #1a1a1a;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(210,19,30,0.13);
+    padding: 0;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.campeonato-card.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.campeonato-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 320px;
+    background: #000;
+    padding: 0 32px;
+    gap: 32px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+}
+.campeonato-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.campeonato-img {
+    flex: 0 0 420px;
+    height: 220px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+    flex: 1 1 320px;
+    min-width: 220px;
+    max-width: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+}
+.campeonato-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 0 0 0;
+    min-height: 220px;
+    max-height: 320px;
+    box-shadow: 0 2px 12px #C2131E22;
+}
+
+.campeonato-info {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    position: relative;
+    gap: 0;
+    flex: 2 1 400px;
+    padding: 32px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(120deg,#2d0a0a 60%,#000 100%);
+    color: #fff;
+}
+
+.campeonato-row.reverse .campeonato-info {
+    align-items: flex-start;
+}
+
+.campeonato-frase {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    background: #222;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 18px;
+    font-style: italic;
+    color: #FFD700;
+    margin-bottom: 22px;
+}
+
+.campeonato-row.reverse .campeonato-frase {
+    text-align: left;
+}
+
+.campeonato-btn {
+    background: #d32f2f;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 28px;
+    font-weight: 600;
+    padding: 12px 36px;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    text-align: center;
+    background: #C2131E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.campeonato-btn:hover {
+    background: #fff;
+    color: #d32f2f;
+    transform: scale(1.05);
+    background: #FFD700;
+    color: #C2131E;
+    transform: scale(1.04);
+}
+
+.campeonato-texto {
+    flex: 1 1 600px;
+    background: #bbb;
+    border: 2px solid #d32f2f;
+    border-radius: 50% / 40%;
+    width: 600px;
+    height: 140px;
+    margin: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 54px;
+    color: #d32f2f;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.campeonato-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 18px;
+    min-width: 220px;
+}
+
+.campeonatos-retangulares {
+    position: relative;
+    z-index: 10;
+    margin-top: 48px; /* Espaço abaixo do carrossel */
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+.retangulo-campeonato {
+    display: flex;
+    background: linear-gradient(120deg,#1a1a1a 60%,#2d0a0a 100%);
+    border-radius: 22px;
+    box-shadow: 0 6px 32px rgba(210,19,30,0.18);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s;
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    min-height: 260px;
+}
+.retangulo-campeonato.anim-campeonato.show {
+    opacity: 1;
+    transform: translateY(0) scale(1.01);
+}
+.retangulo-img {
+    flex: 0 0 340px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.retangulo-img img {
+    width: 340px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: 0 2px 12px #C2131E22;
+}
+.retangulo-info {
+    flex: 1 1 0;
+    padding: 48px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+}
+.retangulo-info h2 {
+    font-size: 32px;
+    color: #FFD700;
+    margin-bottom: 14px;
+    font-weight: 900;
+}
+.retangulo-info p {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: #fff;
+}
+.retangulo-frase {
+    font-size: 18px;
+    font-style: italic;
+    color: #C2131E;
+    margin-bottom: 22px;
+}
+.retangulo-btn {
+    background: #C2131E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    cursor: pointer;
+    width: 200px;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    align-self: flex-start;
+}
+.retangulo-btn:hover {
+    background: #FFD700;
+    color: #C2131E;
+    transform: scale(1.07);
+}
+/* Modal inscrição */
+.inscricao-modal-bg {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.65);
+    align-items: center;
+    justify-content: center;
+}
+.inscricao-modal {
+    background: #1a1a1a;
+    border-radius: 22px;
+    padding: 48px 38px 38px 38px;
+    box-shadow: 0 8px 40px #C2131E55;
+    max-width: 400px;
+    width: 90vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: modalShow 0.5s;
+    opacity: 1;
+    transform: scale(1);
+}
+@keyframes modalShow {
+    from { opacity: 0; transform: scale(0.7) translateY(40px);}
+    to { opacity: 1; transform: scale(1) translateY(0);}
+}
+@keyframes modalHide {
+    from { opacity: 1; transform: scale(1);}
+    to { opacity: 0; transform: scale(0.7) translateY(40px);}
+}
+.anim-modal-show {
+    animation: modalShow 0.35s forwards;
+}
+.anim-modal-hide {
+    animation: modalHide 0.35s forwards;
+}
+.close-inscricao {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 32px;
+    color: #C2131E;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.inscricao-modal h2 {
+    color: #FFD700;
+    font-size: 28px;
+    margin-bottom: 18px;
+    font-weight: 900;
+    text-align: center;
+}
+.inscricao-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+.inscricao-form input {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    background: #333;
+    color: #fff;
+    resize: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: box-shadow 0.2s;
+}
+.inscricao-form input:focus {
+    box-shadow: 0 2px 16px #FFD70055;
+    outline: none;
+}
+.inscricao-form button {
+    background: #C2131E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.inscricao-form button:hover {
+    background: #FFD700;
+    color: #C2131E;
+    transform: scale(1.07);
+}
+.inscricao-sucesso {
+    display: none;
+    background: #25D366;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+@media (max-width: 900px) {
+    .carousel, .carousel-img, .carousel-overlay {
+        height: 320px;
+        min-height: 220px;
+        width: 100vw;
+    }
+    .retangulo-campeonato {
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 180px;
+    }
+    .retangulo-img img {
+        width: 100%;
+        height: 160px;
+    }
+    .retangulo-info {
+        padding: 24px 16px;
+    }
+}

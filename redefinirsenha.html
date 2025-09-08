@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="redefinirsenha.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Redefinir Senha</title>
+</head>
+<body>
+<div id="sideMenu" class="side-menu">
+  <button class="close-btn" onclick="closeMenu()">&times;</button>
+  <a href="cadastro.html" style="margin-top:32px; display:block;">Cadastro/Login</a>
+  <a href="academias.html">Academias</a>
+  <a href="arenas.html">Campeonatos</a>
+  <a href="redesociais.html">Redes Sociais</a>
+</div>
+<button class="open-btn" onclick="openMenu()">&#9776;</button>
+<script>
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "220px";
+  document.getElementById("sideMenu").style.left = "0";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+function showUserInMenu() {
+  const user = localStorage.getItem('userName');
+  let userDiv = document.getElementById('userMenu');
+  if (!userDiv) {
+    userDiv = document.createElement('div');
+    userDiv.id = 'userMenu';
+    userDiv.style.color = '#fff';
+    userDiv.style.fontSize = '16px';
+    userDiv.style.margin = '32px 0 24px 24px';
+    userDiv.style.position = 'absolute';
+    userDiv.style.bottom = '0';
+    userDiv.style.left = '0';
+    userDiv.style.width = '90%';
+    userDiv.style.justifyContent = 'flex-start';
+    userDiv.style.display = 'flex';
+    userDiv.style.alignItems = 'center';
+    document.getElementById('sideMenu').appendChild(userDiv);
+  }
+  if (user) {
+    userDiv.innerHTML = `<span style="font-size:20px; margin-right:6px;">👤</span> ${user}`;
+    userDiv.style.display = 'flex';
+  } else {
+    userDiv.style.display = 'none';
+  }
+}
+window.onload = showUserInMenu;
+</script>
+</body>
+</html>
